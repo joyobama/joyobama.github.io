@@ -71,6 +71,188 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-数据清洗日志2021年9月27日" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/09/27/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E6%97%A5%E5%BF%972021%E5%B9%B49%E6%9C%8827%E6%97%A5/" class="article-date">
+  <time class="dt-published" datetime="2021-09-27T03:28:33.870Z" itemprop="datePublished">2021-09-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/09/27/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E6%97%A5%E5%BF%972021%E5%B9%B49%E6%9C%8827%E6%97%A5/">数据清洗日志2021年9月27日</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h4 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h4><p>通过notepad++打开数据csv文件，经过文本匹配后，未匹配到0xFF，0xFE字符，故导入matlab中NaN元素基本为缺失元素。</p>
+<hr>
+<p>导入matlab后，对缺失数据进行统计，统计数据如下表所示，行是各项属性，列是车辆编号，表中数值为NaN，即缺失元素数量，18行为为每辆车的数据量。</p>
+<p><img src="image-20210927172327404.png" alt="image-20210927172327404"></p>
+<p>利用二维图像显示如下图所示，属性11(电池单体最低电压)，属性12(电池单体最高电压)，属性13(电池单体最高温度)数据缺失最为严重，其次是属性7(里程数)以及属性6(速度)。车辆4数据丢失比例最高，其次是车辆1，车辆2，综合考虑，车辆4数据不予考虑，补齐数据难度太大，同样的车辆1，车辆2缺失比例太高了，补齐之后的数据可靠性比较低，收益太小，放弃。数据补齐工作重点放在车辆3，5，6，7，8；车辆9数据量少但贵在全面，可用于做测试样本，车辆10，数据丢失比例小，但数据量基数太大，数据补齐有一定困难，但不失为重要的训练样本。</p>
+<p><img src="image-20210927210055823.png" alt="image-20210927210055823"><img src="image-20210927202630632.png" alt="image-20210927202630632"></p>
+<p>数据缺失数量图</p>
+<p><img src="image-20210927204220823.png" alt="image-20210927204220823"><img src="image-20210927203338006.png" alt="image-20210927203338006"></p>
+<p>数据缺失比例</p>
+<hr>
+<p>通过以上分析可以发现车辆7数据样本基数较多，同时数据丢失量较少，故从车辆7开始入手处理。车辆7丢失数据如下图所示。</p>
+<p><img src="image-20210927211138399.png" alt="image-20210927211138399"></p>
+<p>属性1为车辆ID，显示NaN为格式转换问题，缺失数据在属性4上，属性4为充电状态，分为：</p>
+<ol>
+<li>停车充电</li>
+<li>行驶充电</li>
+<li>未充电状态</li>
+<li>异常或无效</li>
+</ol>
+<p>属性3为车辆状态，1为启动状态，2为熄火状态；属性9为电池总电流状态，根据属性3可知缺失数据为行驶充电或未充电状态，而根据属性9，电流为负则为充电，电流为正则为放电，故可以较为容易的补齐数据。</p>
+<hr>
+<p>通过对车辆7的分析，发现属性4数据是线性相关的，可以通过其他数据计算得出。观察车辆3数据缺失情况，数据缺失基本上是存在于属性4，以及零散的属性7(里程)，属性11(电池单体最高电压)，属性12(电池单体最低电压)。通过查找定位属性7的缺失数据位置，如下图所示，属性11，属性12缺失数据在同一时刻，故除了补全之外，可直接删除这一数据样本。但根据实际情况，里程数可根据速度以及时间间隔求出，电池单体最高，最低电压，一般与前后时刻一致或线性相关。</p>
+<p><img src="image-20210928102038893.png" alt="image-20210928102038893"></p>
+<p>而在观察前后数据进行补全时，前后时间间隔差距较大，进一步进行观察时间变化规律。观察时间变化规律需要将时刻属性进行数据的格式转换。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sec</span> = <span class="title">date2sec</span><span class="params">(date)</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sec</span> = <span class="number">0</span>;</span><br><span class="line">str = num2str(date);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">str1 = str(<span class="number">1</span>:<span class="number">4</span>);     <span class="comment">%%年份</span></span><br><span class="line">str2 = str(<span class="number">5</span>:<span class="number">6</span>);     <span class="comment">%%月份</span></span><br><span class="line">str3 = str(<span class="number">7</span>:<span class="number">8</span>);     <span class="comment">%%日</span></span><br><span class="line">str4 = str(<span class="number">9</span>:<span class="number">10</span>);    <span class="comment">%%小时</span></span><br><span class="line">str5 = str(<span class="number">11</span>:<span class="number">12</span>);   <span class="comment">%%分钟</span></span><br><span class="line">str6 = str(<span class="number">13</span>:<span class="number">14</span>);   <span class="comment">%%秒</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%%%%% 年份转换</span></span><br><span class="line"><span class="keyword">switch</span> str1</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;2018&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;2019&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">31536000</span>;        <span class="comment">%%%%365*24*60*60=31536000;一年有多少秒</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;2020&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">63072000</span>;        <span class="comment">%%%%18，19都是平年，365天</span></span><br><span class="line">    <span class="keyword">otherwise</span></span><br><span class="line">        <span class="built_in">sec</span> = NaN;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%%%% 月份转换</span></span><br><span class="line"><span class="keyword">switch</span> str2</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;01&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">0</span>;               <span class="comment">%%% 一月</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;02&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">2678400</span>;         <span class="comment">%%%18,19是平年31*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;03&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">5097600</span>;         <span class="comment">%%% 三月(31+28)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;04&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">7776000</span>;         <span class="comment">%%% 四月(31+28+31)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;05&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">10368000</span>;         <span class="comment">%%% 五月(31+28+31+30)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;06&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">13046400</span>;         <span class="comment">%%% 六月(31+28+31+30+31)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;07&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">15638400</span>;         <span class="comment">%%% 七月(31+28+31+30+31+30)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;08&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">18316800</span>;         <span class="comment">%%% 八月(31+28+31+30+31+30+31)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;09&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">20995200</span>;         <span class="comment">%%% 九月(31+28+31+30+31+30+31+31)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;10&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">23587200</span>;         <span class="comment">%%% 十月(31+28+31+30+31+30+31+31+30)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;11&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">26265600</span>;         <span class="comment">%%% 十一月(31+28+31+30+31+30+31+31+30+31)*24*60*60</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;12&#x27;</span></span><br><span class="line">        <span class="built_in">sec</span> = <span class="built_in">sec</span> + <span class="number">28857600</span>;         <span class="comment">%%% 十二月(31+28+31+30+31+30+31+31+30+31+30)*24*60*60</span></span><br><span class="line">    <span class="keyword">otherwise</span></span><br><span class="line">        <span class="built_in">sec</span> = NaN;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%%%% 日期转换</span></span><br><span class="line">day = str2double(str3);</span><br><span class="line"><span class="built_in">sec</span> = <span class="built_in">sec</span> + (day<span class="number">-1</span>)*<span class="number">24</span>*<span class="number">60</span>*<span class="number">60</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">%%%% 小时转换</span></span><br><span class="line">hour = str2double(str4);</span><br><span class="line"><span class="built_in">sec</span> = <span class="built_in">sec</span> + hour*<span class="number">60</span>*<span class="number">60</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">%%%% 分钟转换</span></span><br><span class="line">minuter = str2double(str5);</span><br><span class="line"><span class="built_in">sec</span> = <span class="built_in">sec</span> + minuter*<span class="number">60</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">%%%% 秒</span></span><br><span class="line">second = str2double(str6);</span><br><span class="line"><span class="built_in">sec</span> = <span class="built_in">sec</span> + second;</span><br></pre></td></tr></table></figure>
+
+<p>对各个车辆的时间属性变化进行观察，以确定在时间维度上，数据的缺失程度。</p>
+<p><img src="%E8%BD%A6%E8%BE%861%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆1时间变化曲线"><img src="%E8%BD%A6%E8%BE%861%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆1时间差分曲线"></p>
+<p>车辆1时间变化情况如上图所示，根据时间差分曲线上来看，正值表示</p>
+<p><img src="%E8%BD%A6%E8%BE%862%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆2时间变化曲线"><img src="%E8%BD%A6%E8%BE%862%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆2时间差分曲线"></p>
+<p>车辆2时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%863%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆3时间变化曲线"><img src="%E8%BD%A6%E8%BE%863%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆3时间差分曲线"></p>
+<p>车辆3时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%864%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆4时间变化曲线"><img src="%E8%BD%A6%E8%BE%864%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆4时间差分曲线"></p>
+<p>车辆4时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%865%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆5时间变化曲线"><img src="%E8%BD%A6%E8%BE%865%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆5时间差分曲线"></p>
+<p>车辆5时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%866%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆6时间变化曲线"><img src="%E8%BD%A6%E8%BE%866%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆6时间差分曲线"></p>
+<p>车辆6时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%867%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆7时间变化曲线"><img src="%E8%BD%A6%E8%BE%867%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆7时间差分曲线"></p>
+<p>车辆7时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%868%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆8时间变化曲线"><img src="%E8%BD%A6%E8%BE%868%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆8时间差分曲线"></p>
+<p>车辆8时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%869%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF-16328329623001.png" alt="车辆9时间变化曲线"><img src="%E8%BD%A6%E8%BE%869%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF-16328329731242.png" alt="车辆9时间差分曲线"></p>
+<p>车辆9时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+<p><img src="%E8%BD%A6%E8%BE%8610%E6%97%B6%E9%97%B4%E5%8F%98%E5%8C%96%E6%9B%B2%E7%BA%BF.png" alt="车辆10时间变化曲线"><img src="%E8%BD%A6%E8%BE%8610%E6%97%B6%E9%97%B4%E5%B7%AE%E5%88%86%E6%9B%B2%E7%BA%BF.png" alt="车辆10时间差分曲线"></p>
+<p>车辆10时间变化情况如上图所示，根据时间差分曲线上来看，</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/09/27/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E6%97%A5%E5%BF%972021%E5%B9%B49%E6%9C%8827%E6%97%A5/" data-id="cku459fs90000dwoc03kt6giz" data-title="数据清洗日志2021年9月27日" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-新能源汽车电池数据清洗" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/09/24/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/" class="article-date">
+  <time class="dt-published" datetime="2021-09-24T06:32:12.331Z" itemprop="datePublished">2021-09-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/09/24/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/">新能源汽车电池数据清洗</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><h5 id="数据清洗的一些标准"><a href="#数据清洗的一些标准" class="headerlink" title="数据清洗的一些标准"></a>数据清洗的一些标准</h5><ul>
+<li>唯一性：不存在无意义的重复数据。</li>
+<li>完整性：数据完成且连续。</li>
+<li>一致性：数据在多元数据源中意义一致。</li>
+<li>有效性：数据在分析的时间点是有效的。</li>
+</ul>
+<h5 id="对各个字段的处理"><a href="#对各个字段的处理" class="headerlink" title="对各个字段的处理"></a>对各个字段的处理</h5><ul>
+<li>vid-车辆ID，数据分割完基本上就可以删除了，或者在最后导入模型计算的时候再去除，或者矩阵名要严格对应。</li>
+<li>daq_time-数据采集时刻，需要转换为方便使用的秒单位，当前格式便于查看，不便于计算。</li>
+<li>status-车辆状态，如果有缺失，可以按照速度，电流等字段进行判断是启动还是未启动，之后需要根据该字段进行电池单个循环的一个分割。</li>
+<li>c_stat-充电状态，尽量补全，主要是充电完成该标识非常有意义，前三项指标都可以根据其他的字段补充，比较冗余，有线性关系。</li>
+<li>mode-车辆运行模式，这个基本上可以删除，因为都是纯电。</li>
+<li>speed-车速，速度可以根据里程，电流等进行补全。</li>
+<li>mileage-里程，主要根据速度，或者本字段进行补全。</li>
+<li>t_volt-总电压，非常重要的字段，尽量补全，一般为线性，一般由本身字段补全。</li>
+<li>t_current-总电流 ，非常重要的字段，尽量补全，与速度，充电状态等字段相关，可由自身字段或者相关字段补齐。</li>
+<li>soc-电池荷电状态，同样是非常重要的字段，尽量补全，一般为线性，跟充放电，速度相关，由自身或者相关字段补全。</li>
+<li>max_cell_volt-电池单体电压最高值，尽量补全，该字段是故障判断的重要字段，而故障也是电池SOH的重要影响因素。通常与前后时刻相关，相同。</li>
+<li>min_cell_volt-电池单体电压最低值，尽量补全，该字段是故障判断的重要字段，而故障也是电池SOH的重要影响因素。与单体最高值相对应，表征电池组中单体的一致性，若一致性较差，则SOH必然下降，通常与前后时刻相关，相同。</li>
+<li>max_temp-最高温度，电池组的最高温度，大致上就是单体电池的最高温度，如果发生短路或相关故障时，温度升高是非常重要的指标。故尽量补全，一般与前后时刻相关，相同。</li>
+<li>min_temp-最低温度，电池组的最低温度，大致上就是单体电池的最低温度，主要是根据最高温度，判断电池组单体电池的一致性，一般与前后时刻相关，相同。</li>
+<li>max_alarm_lvl-最高报警等级，重要的故障标签，不能随便补齐，一般也都有数据。</li>
+<li>genral-alarm-通用报警标志，重要的故障标签，不能随便补齐，一般也都有数据。</li>
+</ul>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20571505">数据清洗的一些梳理 - 知乎 (zhihu.com)</a></p>
+<p><img src="https://pic4.zhimg.com/8aee59b038c0f3a15d4e2d871bfd5ffb_r.jpg" alt="preview"></p>
+<h5 id="预处理阶段"><a href="#预处理阶段" class="headerlink" title="预处理阶段"></a>预处理阶段</h5><ul>
+<li>导入数据</li>
+<li>查看数据：查看字段涵义，字段数据情况</li>
+</ul>
+<h5 id="第一步：缺省值清洗"><a href="#第一步：缺省值清洗" class="headerlink" title="第一步：缺省值清洗"></a>第一步：缺省值清洗</h5><p>缺失值最为常见，也是我们这次数据集里面存在较多的情况。</p>
+<ol>
+<li><p><strong>确定缺失值范围</strong>：对每个字段都计算其缺失值比例，然后按照缺失比例和字段重要性，分别制定策略，可用下图表示：</p>
+<p><img src="https://pic2.zhimg.com/20af3ec040211ec769d1b1a4e4ddb43d_r.jpg" alt="preview"></p>
+</li>
+<li><p><strong>去除不需要的字段</strong>：注意备份，我们这次数据集里面汽车类型mode和日期就可以去除。</p>
+</li>
+<li><p><strong>填充缺失内容</strong>：对于我们数据集里面，第一步是根据电流积分求容量，所以电流数据基本上要是完整的，不能去除，只能填充。</p>
+<ul>
+<li>以不同指标的计算结果填充，就电流为例，如果缺失，但有速度，速度基本恒定，那忽略上下坡，认为功率一定，电流一定。若为停车状态，那认为不开空调，认为不用电，电流为0，其他字段依次类推。</li>
+<li>以同一指标的计算结果填充。</li>
+<li>以业务知识或经验推测</li>
+</ul>
+</li>
+<li><p><strong>重新获取</strong>：本次数据集不可重新获取</p>
+</li>
+</ol>
+<h5 id="第二步：格式内容清洗"><a href="#第二步：格式内容清洗" class="headerlink" title="第二步：格式内容清洗"></a>第二步：格式内容清洗</h5><p>格式内容主要是将格式调整到我们方便使用的形式，比如说时间字段就需要转换成单位为秒，方便对电流的积分。以及其他字段的计算处理。</p>
+<ol>
+<li>时间、日期、数值、全半角等显示格式不一致</li>
+<li>内容中有不符合该字段的字符或数据</li>
+<li>内容中 有不该存在的字符，比如说空格，下划线，星号，等等</li>
+</ol>
+<h5 id="第三步：逻辑错误清洗"><a href="#第三步：逻辑错误清洗" class="headerlink" title="第三步：逻辑错误清洗"></a>第三步：逻辑错误清洗</h5><pre><code> 1. 去重，去除一些重复的数据，重复是指一个样本重复，我们数据集不存在同一个时刻的数据，应该不需要去重操作。
+ 2. 去除不合理的值，比方说电池的电压不能为零，里程数不能为零等等
+ 3. 修正矛盾内容，暂时我还没有发现矛盾数据，但应该会有的
+</code></pre>
+<h5 id="第四步：非需求数据清洗"><a href="#第四步：非需求数据清洗" class="headerlink" title="第四步：非需求数据清洗"></a>第四步：非需求数据清洗</h5><p>删除不需要的字段，就是数据并没有缺失，但没有什么用的字段，比如说完全冗余的字段：日期，比如说字段都是为1的汽车类型，就对我们的计算没有帮助，只是增加计算量。</p>
+<h5 id="第五步：关联性验证"><a href="#第五步：关联性验证" class="headerlink" title="第五步：关联性验证"></a>第五步：关联性验证</h5><p>当数据类型有多个来源的时候，才需要这一步，我们不需要，我们全部都是从数据库里面导出来的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/09/24/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/" data-id="cku459fsb0001dwocewbrf4g5" data-title="新能源汽车电池数据清洗" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-文献阅读2021年9月22日" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/09/22/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB2021%E5%B9%B49%E6%9C%8822%E6%97%A5/" class="article-date">
@@ -159,6 +341,13 @@
 </li>
 </ul>
 <p>电池的一致性对电池组整体寿命有非常大的影响。</p>
+<h3 id="A-New-Algorithm-for-the-SOH-Estimation-of-the-Single-Battery-in-Battery-power-Station"><a href="#A-New-Algorithm-for-the-SOH-Estimation-of-the-Single-Battery-in-Battery-power-Station" class="headerlink" title="A New Algorithm for the SOH Estimation of the Single Battery in Battery-power Station"></a>A New Algorithm for the SOH Estimation of the Single Battery in Battery-power Station</h3><ul>
+<li>单个点是不能计算出SOH的，至少一次charge或者是一次discharge。必须是一段时间序列，故必要的切片，如何切片，行驶过程中的短时能量回收是不是要计算在内，计算在内的话，会导致碎片化，还是不应该计算在内，则首先要判断是不是在行驶过程中充电，这个倒比较好弄。</li>
+<li><img src="C:\Users\zjh10\AppData\Roaming\Typora\typora-user-images\image-20210923220230581.png" alt="image-20210923220230581"></li>
+</ul>
+<p>要求给出SOH的指标解释，由什么构成。但事实上并不清楚好在哪里，差在哪里。故还是按照最基本的定义，工业中用的比较多的容量比较方式。容量，内阻这些重要参数并没有给出，但给出了相关电流等参数，电流为电量积分，故可以积分求出当前电量，然后根据电量来进行基本SOH的计算，然后再去利用数据去拟合，去表征SOH，进一步的去预测，或者进一步改善SOH这一指标的合理性和实用性。</p>
+<p>这一步的前提是，电流的连续以及可靠，能够较为准确的积分出电量信息。电流连续的要求是时间间隔要相同，数据不能缺失，可能数据需要平滑操作，并且具有单位的转换，时间单位需要转换成量纲秒，间隔最好也应该是秒，但这个不好实现，因为数据有缺失，时间间隔可能需要为十秒或者更长，则相应的，电流的定义是单位秒通过的电荷量，则应该相匹配对应的时间间隔。</p>
+<p>同时电量作为能量单位，与做功有关，则跟里程有一定关系，上海，北京两地，地势较为平坦，重力势能转换较小，故在一定程度上可认为车在平地行驶，做功为距离与摩檫力相乘，而摩檫力与地面结构有关，上海，北京两地经济较为发达，路面一致性较好，而车身自重与人体重量相差较大，与乘坐人数无关，即里程与做功，与电量存在相关线性关系。</p>
 
       
     </div>
@@ -352,6 +541,14 @@
       <ul>
         
           <li>
+            <a href="/2021/09/27/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E6%97%A5%E5%BF%972021%E5%B9%B49%E6%9C%8827%E6%97%A5/">数据清洗日志2021年9月27日</a>
+          </li>
+        
+          <li>
+            <a href="/2021/09/24/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/">新能源汽车电池数据清洗</a>
+          </li>
+        
+          <li>
             <a href="/2021/09/22/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB2021%E5%B9%B49%E6%9C%8822%E6%97%A5/">锂电池电化学文献</a>
           </li>
         
@@ -361,10 +558,6 @@
         
           <li>
             <a href="/2021/09/03/%E8%AF%BE%E9%A2%98%E7%BB%84%E7%9B%AE%E6%A0%87%E6%9C%9F%E5%88%8A/">课题组目标期刊</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/14/hello-world/">Hello World</a>
           </li>
         
       </ul>
