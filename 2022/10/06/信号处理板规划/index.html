@@ -109,7 +109,7 @@
       
         <p>项目拟设计、开发与制作固定式样机信号调理电路板10块（用8备2）、便携式样机信号调理电路板5块（用4备1），共15块。具体技术说明见加工技术方案。</p>
 <h2 id="总体设计方案"><a href="#总体设计方案" class="headerlink" title="总体设计方案"></a>总体设计方案</h2><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204091304026.png" alt="image-20220409130457985"></p>
-<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204091330575.png"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204091330575.png" alt=""></p>
 <p>测试过程中，需要将几个部分单独测试，主要分为三个部分，分别制小板测试相关性能，另外需要制作两块模拟测试底板，即整板输出底板，整板输入底板；测试的相关指标与测试方法见加工技术方案。如下：</p>
 <ol>
 <li><p>输入模拟底板</p>
@@ -123,7 +123,7 @@
 <li><p>信号选通板（可选待定，这个功能很单一，理论上不测试也行，主要用于练习）</p>
 <h2 id="电源板"><a href="#电源板" class="headerlink" title="电源板"></a>电源板</h2><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204091403386.png" alt="image-20220409140306314"></p>
 <p>电源部分的电路图如上所示，工程中也有该图，上图中没有给出插接件，需要另外添加电源接线端子，另外在第一次上电测试时，需要进行一定的防护，避免电容反接等失误所造成的电容炸裂，用一个罩子罩住，待确定电路正常工作后，可进行正常测试，测试工具包括电子负载，万用表，示波器等工具。测试内容包括不同负载下，±8V处电源波纹，±5V处电源波纹，输出电流范围0-4A，设计为2.5A左右，超过2.5A大电流上电测试时，需要做好防护。</p>
-<p>电源部分最需要注意的时<strong>电容</strong>，特别是<strong>钽电容</strong>（E*），出于安全以及体积的考虑，未采用常用铝电解电容，而选用钽电容，钽电容又称安规电容，特点是耐压低，不会发生铝电解电容的炸裂现象，而是直接烧毁，并且耐压较低，不会因为脉冲浪涌电压损坏后级电路。但在测试时，需要保证电压不能超过所选用电容的耐压值，本设计中全部采用<strong>100uF，16V，E封装</strong>，在购买时若可选更高耐压，<strong>相同封装</strong>，容值相近，应选用更高耐压电容。<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiahailong90/article/details/77007748">贴片钽电容封封装及规格和参数资料_漠落的博客-CSDN博客_钽电容型号对照表</a></p>
+<p>电源部分最需要注意的时<strong>电容</strong>，特别是<strong>钽电容</strong>（E<em>），出于安全以及体积的考虑，未采用常用铝电解电容，而选用钽电容，钽电容又称安规电容，特点是耐压低，不会发生铝电解电容的炸裂现象，而是直接烧毁，并且耐压较低，不会因为脉冲浪涌电压损坏后级电路。但在测试时，需要保证电压不能超过所选用电容的耐压值，本设计中全部采用<strong>100uF，16V，E封装</strong>，在购买时若可选更高耐压，<em>*相同封装</em></em>，容值相近，应选用更高耐压电容。<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiahailong90/article/details/77007748">贴片钽电容封封装及规格和参数资料<em>漠落的博客-CSDN博客</em>钽电容型号对照表</a></p>
 <p>若烧毁，应查明原因，并调整其他元件参数，例如分压电阻参数。</p>
 <h2 id="信号处理部分"><a href="#信号处理部分" class="headerlink" title="信号处理部分"></a>信号处理部分</h2><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204091515684.png" alt="image-20220409151547650"></p>
 <p>信号处理部分又分为两个部分，如上图则是接口电路，其作用是将开关信号转换为电压信号，利用的是RC积分电路进行转换，运放是用于构建电压跟随电路，电压跟随器中反馈电阻（R1,R3），主要用于消除一些干扰，若干扰太大可调整其阻值，一般减小该阻值。</p>
@@ -141,7 +141,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://joyobama.github.io/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/" data-id="cl8x3ovrw0005bgoc1c2ah8ab" data-title="信号处理板计划" class="article-share-link">Teilen</a>
+      <a data-url="https://joyobama.github.io/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/" data-id="cl8x6hjq40006w0oc4aaodh4f" data-title="信号处理板计划" class="article-share-link">Teilen</a>
       
       
       
