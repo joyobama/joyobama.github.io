@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Verilog 有符号数与无符号数的一些注意点 | Time is Gone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="有符号数（负数）与无符号数参考连接  关于verilog的有符号数与无符号数的转换 - Carzy_Learner - 博客园 (cnblogs.com) 数字IC秋招面试专题（二）verilog的signed和unsigned_王_嘻嘻的博客-CSDN博客 Verilog十大基本功5 (关于verilog中的signed类型)_Times_poem的博客-CSDN博客  因为做数字信号处理的时候">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Verilog 有符号数与无符号数的一些注意点">
+<meta property="og:url" content="https://joyobama.github.io/2022/10/06/Verilog%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B8%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%A6%81%E7%82%B9/index.html">
+<meta property="og:site_name" content="Time is Gone">
+<meta property="og:description" content="有符号数（负数）与无符号数参考连接  关于verilog的有符号数与无符号数的转换 - Carzy_Learner - 博客园 (cnblogs.com) 数字IC秋招面试专题（二）verilog的signed和unsigned_王_嘻嘻的博客-CSDN博客 Verilog十大基本功5 (关于verilog中的signed类型)_Times_poem的博客-CSDN博客  因为做数字信号处理的时候">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-10-06T13:00:15.665Z">
+<meta property="article:modified_time" content="2022-04-22T11:52:17.507Z">
+<meta property="article:author" content="Joy_Obama">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Time is Gone" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Time is Gone</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Joy_Obama</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://joyobama.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Verilog有符号数与无符号数的一些要点" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/06/Verilog%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B8%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%A6%81%E7%82%B9/" class="article-date">
+  <time class="dt-published" datetime="2022-10-06T13:00:15.665Z" itemprop="datePublished">2022-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Verilog 有符号数与无符号数的一些注意点
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="有符号数（负数）与无符号数"><a href="#有符号数（负数）与无符号数" class="headerlink" title="有符号数（负数）与无符号数"></a>有符号数（负数）与无符号数</h1><p>参考连接</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dadaozhijian22/p/8778636.html">关于verilog的有符号数与无符号数的转换 - Carzy_Learner - 博客园 (cnblogs.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/sz_woshishazi/article/details/108773295">数字IC秋招面试专题（二）verilog的signed和unsigned_王_嘻嘻的博客-CSDN博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Times_poem/article/details/84997976?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.pc_relevant_default&spm=1001.2101.3001.4242.1&utm_relevant_index=3">Verilog十大基本功5 (关于verilog中的signed类型)_Times_poem的博客-CSDN博客</a></li>
+</ul>
+<p>因为做数字信号处理的时候发现AD输入数据，DA输出数据都是无符号整数，但是其中有需要进行乘法、开方、滤波等一系列操作。AD与DA的无符号数据都是因为将将信号进行了偏置，当进行乘法计算时会有：<br>$$<br>S_1 &#x3D; A\sin(\omega_1 t + \phi_1)\<br>S_2 &#x3D; B\sin(\omega_2 t + \phi_2)\<br>S_1S_2 &#x3D; AB\sin(\omega_1 t + \phi_1)\sin(\omega_2 t + \phi_2)\<br>S^*_1 &#x3D; \frac{A}{2}+A\sin(\omega_1 t + \phi_1)\<br>S^*_2 &#x3D; \frac{B}{2}+B\sin(\omega_2 t + \phi_2)\<br>S^*_1S^*_2&#x3D;\frac{S_1S_2}{2}+\frac{AB}{2}(\sin(\omega_1 t + \phi_1)+\sin(\omega_2 t + \phi_2)+\frac{1}{2})<br>$$<br>所以在进行相关性解调，求幅值的操作中，无符号这种偏置操作会影响计算的精度与效率，信噪比明显下降。</p>
+<p>故将将无符号数转换为有符号数是十分有必要的。</p>
+<h2 id="无符号数转有符号数"><a href="#无符号数转有符号数" class="headerlink" title="无符号数转有符号数"></a>无符号数转有符号数</h2><p>在Verilog中提供了两个系统函数进行两者的转换，分别是将无符号数转为有符号数的$$signed$和将有符号数转为无符号数的$$unsigned$，相关示例如下：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] regA, regB;</span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">7</span>:<span class="number">0</span>] regS;</span><br><span class="line">regA = <span class="built_in">$unsigned</span>(-<span class="number">4</span>); <span class="comment">// regA = 8&#x27;b11111100</span></span><br><span class="line">regB = <span class="built_in">$unsigned</span>(-<span class="number">4</span>&#x27;sd4); <span class="comment">// regB = 8&#x27;b00001100</span></span><br><span class="line">regS = <span class="built_in">$signed</span> (<span class="number">4&#x27;b1100</span>); <span class="comment">// regS = -4</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面几个示例可以看出，在使用$signed函数时，有以下几个特点</p>
+<ul>
+<li>会自动将最高位作为符号位</li>
+<li>不会增加或减少位数，故在处理1’b1时无法判断其为符号位或数字有效位，在处理需要注意</li>
+<li>不会更改寄存器中的值，只是在综合时有意义</li>
+<li>在赋值时，有符号数在进制带有s</li>
+<li>有符号数都是以补码的形式存在的，所无符号数转过去并非是单纯的将最高做作为符号位，而是因为整数的补码与原码相同</li>
+</ul>
+<p>而在使用$unsigned函数时，同样不会更改内容，结合无符号与有符号计算的一些特性，该函数非常少使用。总的来说，值还是那些值，但是所代表的意义，以及在综合时的逻辑关系不一样了。Verilog一般默认都是采用无符号整数，有符号的都需要特别申明。</p>
+<h2 id="有符号数与无符号数的运算规则"><a href="#有符号数与无符号数的运算规则" class="headerlink" title="有符号数与无符号数的运算规则"></a>有符号数与无符号数的运算规则</h2><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">the following are the rules for determining the resulting type of an expression</span></span><br><span class="line"><span class="comment">-----expression type depends only on the oprands .It does not depend on the left-hand(if any)</span></span><br><span class="line"><span class="comment">-----decimal numbers are signed </span></span><br><span class="line"><span class="comment">-----based_numbers are unsigned,except where the s notation is used in the based specifier</span></span><br><span class="line"><span class="comment">-----bit-select results are unsigned , regardless of the oprands</span></span><br><span class="line"><span class="comment">-----part-select results are unsigned ,regradless of oprands</span></span><br><span class="line"><span class="comment">-----part-select results are unsigned regardless of the oprands even if the part-select specifes the entire vector</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">reg</span> [<span class="number">15</span>:<span class="number">0</span>] a;</span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">7</span>:<span class="number">0</span>] b;</span><br><span class="line"><span class="keyword">initial</span></span><br><span class="line">a = b[<span class="number">7</span>:<span class="number">0</span>]; <span class="comment">// b[7:0] is unsigned and therefore zero-extended</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">-----concatenate result are unsigned regtadless of the oprands</span></span><br><span class="line"><span class="comment">-----comparison results (1,0) are unsigned regradless of the oprands</span></span><br><span class="line"><span class="comment">-----reals converted to integers by type coercion are signed</span></span><br><span class="line"><span class="comment">-----the sign and size of any self-determined operand are determined by the operand itself and independent of the remainder of the expression </span></span><br><span class="line"><span class="comment">-----for nonself-determined operands the follwing rules apply</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">if any operand is real the result is real </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">if any operand is unsigned the result is unsigned regardless of the operator(运算符) except when specified otherwise</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> If a signed operand is to be resized to a larger signed width and the value of the sign bit is X, the resulting value shall be bit-filled with Xs. If the sign bit of the value is Z, then the resulting value shall be bit-filled with Zs. If any bit of a signed value is X or Z, then any nonlogical operation involving the value shall result in the entire resultant value being an X and the type consistent with the expression’s type.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">If the width of the right-hand expression is larger than the width of the left-hand side in an assignment, the MSBs of the right-hand expression will always be discarded to match the size of the left-hand side. Implementations are not required to warn or report any errors related to assignment size mismatch or truncation. Truncating the sign bit of a signed expression may change the sign of the result.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">                                                                                                                                                                          </span><br><span class="line"><span class="comment">//For example:</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">5</span>:<span class="number">0</span>] a;</span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">4</span>:<span class="number">0</span>] b;</span><br><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">a = <span class="number">8&#x27;hff</span>; <span class="comment">// After the assignment, a = 6&#x27;h3f</span></span><br><span class="line">b = <span class="number">8&#x27;hff</span>; <span class="comment">// After the assignment, b = 5&#x27;h1f</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">//For example:</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">5</span>:<span class="number">0</span>] a;</span><br><span class="line"><span class="keyword">reg</span> <span class="keyword">signed</span> [<span class="number">4</span>:<span class="number">0</span>] b, c;</span><br><span class="line"><span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">a = <span class="number">8</span>&#x27;sh8f; <span class="comment">// After the assignment, a = 6&#x27;h0f</span></span><br><span class="line">b = <span class="number">8</span>&#x27;sh8f; <span class="comment">// After the assignment, b = 5&#x27;h0f</span></span><br><span class="line">c = -<span class="number">113</span>; <span class="comment">// After the assignment, c = 15</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>运算中存在无符号数时，一律按照无符号数运算，仅当所有运算数都为有符号数时，才会按照有符号数进行运算。</li>
+<li>只要发生截位的情况，例如左边操作操作数位数小于右边操作数，一律按照无符号数操作。</li>
+<li>当右值位数不等时进行运算，小位宽数会先扩位到大位宽再参与运算；扩位按最高位进行扩，所以要<strong>尤其注意正负</strong>，所以最好保证都是相同位数，并考虑溢出情况。</li>
+</ul>
+<h2 id="AD-x2F-DA操作时的有无符号数的转换"><a href="#AD-x2F-DA操作时的有无符号数的转换" class="headerlink" title="AD&#x2F;DA操作时的有无符号数的转换"></a>AD&#x2F;DA操作时的有无符号数的转换</h2><p>因为AD或DA芯片一般都是只能采样或者输出正电压，AD采集以及DA输出时的数据都是无符号数，但在计算时需要有符号数，故在进行输入输出时需要将其进行转换。有网友提出了一种便捷的方式将两者进行转换，主要体现在最高位上。无符号数是加了$2^{N-1}$偏置，需要减去这一偏置，而这一操作恰好只改变最高，相当于将最高位取反，故只需要将最高位取反即可。</p>
+<p>在有负电压信号的系统中，无论是有符号数还是无符号数，AD采样负电压信号的值都是以补码的信号存在的，在有些系统中有向量合成取模的操作，涉及平方和开方，只有幅值没有方向，当确定为负电压值时还需要进行取补码的操作，将其转换为有符号数，再将最高位整理成无符号数或者有符号数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://joyobama.github.io/2022/10/06/Verilog%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B8%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%A6%81%E7%82%B9/" data-id="cl8x3ovrx0006bgoc61vk0fm1" data-title="Verilog 有符号数与无符号数的一些注意点" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/10/06/Vivado_FIR%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Vivado FIR Compiler 7.2使用记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/06/SIFT/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">AD简易教程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2022%E5%B9%B44%E6%9C%88FPGA%E5%BC%80%E5%8F%91%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E8%A6%81%E7%82%B9/">要点总结</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2021%E5%B9%B4%E8%AE%B0%E8%B4%A6/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/">信号处理板计划</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/">新能源汽车电池数据清洗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Joy_Obama<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

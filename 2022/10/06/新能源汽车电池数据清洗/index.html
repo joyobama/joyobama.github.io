@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>新能源汽车电池数据清洗 | Time is Gone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="数据清洗数据清洗的一些标准 唯一性：不存在无意义的重复数据。 完整性：数据完成且连续。 一致性：数据在多元数据源中意义一致。 有效性：数据在分析的时间点是有效的。  对各个字段的处理 vid-车辆ID，数据分割完基本上就可以删除了，或者在最后导入模型计算的时候再去除，或者矩阵名要严格对应。 daq_time-数据采集时刻，需要转换为方便使用的秒单位，当前格式便于查看，不便于计算。 status-车">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新能源汽车电池数据清洗">
+<meta property="og:url" content="https://joyobama.github.io/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/index.html">
+<meta property="og:site_name" content="Time is Gone">
+<meta property="og:description" content="数据清洗数据清洗的一些标准 唯一性：不存在无意义的重复数据。 完整性：数据完成且连续。 一致性：数据在多元数据源中意义一致。 有效性：数据在分析的时间点是有效的。  对各个字段的处理 vid-车辆ID，数据分割完基本上就可以删除了，或者在最后导入模型计算的时候再去除，或者矩阵名要严格对应。 daq_time-数据采集时刻，需要转换为方便使用的秒单位，当前格式便于查看，不便于计算。 status-车">
+<meta property="og:locale">
+<meta property="og:image" content="https://pic4.zhimg.com/8aee59b038c0f3a15d4e2d871bfd5ffb_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/20af3ec040211ec769d1b1a4e4ddb43d_r.jpg">
+<meta property="article:published_time" content="2022-10-06T13:00:15.680Z">
+<meta property="article:modified_time" content="2021-09-24T08:08:49.088Z">
+<meta property="article:author" content="Joy_Obama">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic4.zhimg.com/8aee59b038c0f3a15d4e2d871bfd5ffb_r.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Time is Gone" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Time is Gone</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Joy_Obama</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://joyobama.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-新能源汽车电池数据清洗" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/" class="article-date">
+  <time class="dt-published" datetime="2022-10-06T13:00:15.680Z" itemprop="datePublished">2022-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      新能源汽车电池数据清洗
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><h5 id="数据清洗的一些标准"><a href="#数据清洗的一些标准" class="headerlink" title="数据清洗的一些标准"></a>数据清洗的一些标准</h5><ul>
+<li>唯一性：不存在无意义的重复数据。</li>
+<li>完整性：数据完成且连续。</li>
+<li>一致性：数据在多元数据源中意义一致。</li>
+<li>有效性：数据在分析的时间点是有效的。</li>
+</ul>
+<h5 id="对各个字段的处理"><a href="#对各个字段的处理" class="headerlink" title="对各个字段的处理"></a>对各个字段的处理</h5><ul>
+<li>vid-车辆ID，数据分割完基本上就可以删除了，或者在最后导入模型计算的时候再去除，或者矩阵名要严格对应。</li>
+<li>daq_time-数据采集时刻，需要转换为方便使用的秒单位，当前格式便于查看，不便于计算。</li>
+<li>status-车辆状态，如果有缺失，可以按照速度，电流等字段进行判断是启动还是未启动，之后需要根据该字段进行电池单个循环的一个分割。</li>
+<li>c_stat-充电状态，尽量补全，主要是充电完成该标识非常有意义，前三项指标都可以根据其他的字段补充，比较冗余，有线性关系。</li>
+<li>mode-车辆运行模式，这个基本上可以删除，因为都是纯电。</li>
+<li>speed-车速，速度可以根据里程，电流等进行补全。</li>
+<li>mileage-里程，主要根据速度，或者本字段进行补全。</li>
+<li>t_volt-总电压，非常重要的字段，尽量补全，一般为线性，一般由本身字段补全。</li>
+<li>t_current-总电流 ，非常重要的字段，尽量补全，与速度，充电状态等字段相关，可由自身字段或者相关字段补齐。</li>
+<li>soc-电池荷电状态，同样是非常重要的字段，尽量补全，一般为线性，跟充放电，速度相关，由自身或者相关字段补全。</li>
+<li>max_cell_volt-电池单体电压最高值，尽量补全，该字段是故障判断的重要字段，而故障也是电池SOH的重要影响因素。通常与前后时刻相关，相同。</li>
+<li>min_cell_volt-电池单体电压最低值，尽量补全，该字段是故障判断的重要字段，而故障也是电池SOH的重要影响因素。与单体最高值相对应，表征电池组中单体的一致性，若一致性较差，则SOH必然下降，通常与前后时刻相关，相同。</li>
+<li>max_temp-最高温度，电池组的最高温度，大致上就是单体电池的最高温度，如果发生短路或相关故障时，温度升高是非常重要的指标。故尽量补全，一般与前后时刻相关，相同。</li>
+<li>min_temp-最低温度，电池组的最低温度，大致上就是单体电池的最低温度，主要是根据最高温度，判断电池组单体电池的一致性，一般与前后时刻相关，相同。</li>
+<li>max_alarm_lvl-最高报警等级，重要的故障标签，不能随便补齐，一般也都有数据。</li>
+<li>genral-alarm-通用报警标志，重要的故障标签，不能随便补齐，一般也都有数据。</li>
+</ul>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20571505">数据清洗的一些梳理 - 知乎 (zhihu.com)</a></p>
+<p><img src="https://pic4.zhimg.com/8aee59b038c0f3a15d4e2d871bfd5ffb_r.jpg" alt="preview"></p>
+<h5 id="预处理阶段"><a href="#预处理阶段" class="headerlink" title="预处理阶段"></a>预处理阶段</h5><ul>
+<li>导入数据</li>
+<li>查看数据：查看字段涵义，字段数据情况</li>
+</ul>
+<h5 id="第一步：缺省值清洗"><a href="#第一步：缺省值清洗" class="headerlink" title="第一步：缺省值清洗"></a>第一步：缺省值清洗</h5><p>缺失值最为常见，也是我们这次数据集里面存在较多的情况。</p>
+<ol>
+<li><p><strong>确定缺失值范围</strong>：对每个字段都计算其缺失值比例，然后按照缺失比例和字段重要性，分别制定策略，可用下图表示：</p>
+<p><img src="https://pic2.zhimg.com/20af3ec040211ec769d1b1a4e4ddb43d_r.jpg" alt="preview"></p>
+</li>
+<li><p><strong>去除不需要的字段</strong>：注意备份，我们这次数据集里面汽车类型mode和日期就可以去除。</p>
+</li>
+<li><p><strong>填充缺失内容</strong>：对于我们数据集里面，第一步是根据电流积分求容量，所以电流数据基本上要是完整的，不能去除，只能填充。</p>
+<ul>
+<li>以不同指标的计算结果填充，就电流为例，如果缺失，但有速度，速度基本恒定，那忽略上下坡，认为功率一定，电流一定。若为停车状态，那认为不开空调，认为不用电，电流为0，其他字段依次类推。</li>
+<li>以同一指标的计算结果填充。</li>
+<li>以业务知识或经验推测</li>
+</ul>
+</li>
+<li><p><strong>重新获取</strong>：本次数据集不可重新获取</p>
+</li>
+</ol>
+<h5 id="第二步：格式内容清洗"><a href="#第二步：格式内容清洗" class="headerlink" title="第二步：格式内容清洗"></a>第二步：格式内容清洗</h5><p>格式内容主要是将格式调整到我们方便使用的形式，比如说时间字段就需要转换成单位为秒，方便对电流的积分。以及其他字段的计算处理。</p>
+<ol>
+<li>时间、日期、数值、全半角等显示格式不一致</li>
+<li>内容中有不符合该字段的字符或数据</li>
+<li>内容中 有不该存在的字符，比如说空格，下划线，星号，等等</li>
+</ol>
+<h5 id="第三步：逻辑错误清洗"><a href="#第三步：逻辑错误清洗" class="headerlink" title="第三步：逻辑错误清洗"></a>第三步：逻辑错误清洗</h5><pre><code> 1. 去重，去除一些重复的数据，重复是指一个样本重复，我们数据集不存在同一个时刻的数据，应该不需要去重操作。
+ 2. 去除不合理的值，比方说电池的电压不能为零，里程数不能为零等等
+ 3. 修正矛盾内容，暂时我还没有发现矛盾数据，但应该会有的
+</code></pre>
+<h5 id="第四步：非需求数据清洗"><a href="#第四步：非需求数据清洗" class="headerlink" title="第四步：非需求数据清洗"></a>第四步：非需求数据清洗</h5><p>删除不需要的字段，就是数据并没有缺失，但没有什么用的字段，比如说完全冗余的字段：日期，比如说字段都是为1的汽车类型，就对我们的计算没有帮助，只是增加计算量。</p>
+<h5 id="第五步：关联性验证"><a href="#第五步：关联性验证" class="headerlink" title="第五步：关联性验证"></a>第五步：关联性验证</h5><p>当数据类型有多个来源的时候，才需要这一步，我们不需要，我们全部都是从数据库里面导出来的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://joyobama.github.io/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/" data-id="cl8x3ovs5000ebgocco2d1pmr" data-title="新能源汽车电池数据清洗" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          信号处理板计划
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/06/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">故障诊断方案</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">AD简易教程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2022%E5%B9%B44%E6%9C%88FPGA%E5%BC%80%E5%8F%91%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E8%A6%81%E7%82%B9/">要点总结</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2021%E5%B9%B4%E8%AE%B0%E8%B4%A6/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/">信号处理板计划</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/">新能源汽车电池数据清洗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Joy_Obama<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

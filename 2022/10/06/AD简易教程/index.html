@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>AD简易教程 | Time is Gone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="AD 简易教程安装AD21.6.1和DigiPCBA封装库插件 AD21.6.1安装包：链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1t47GxXYDtGJwAkHclOfbrg?pwd&#x3D;w0fv      提取码：w0fv 安装教程：https:&#x2F;&#x2F;www.mr-wu.cn&#x2F;altium-designer-ad-21-free-download&#x2F; DigiPCBA插件：https:&#x2F;&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AD简易教程">
+<meta property="og:url" content="https://joyobama.github.io/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Time is Gone">
+<meta property="og:description" content="AD 简易教程安装AD21.6.1和DigiPCBA封装库插件 AD21.6.1安装包：链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1t47GxXYDtGJwAkHclOfbrg?pwd&#x3D;w0fv      提取码：w0fv 安装教程：https:&#x2F;&#x2F;www.mr-wu.cn&#x2F;altium-designer-ad-21-free-download&#x2F; DigiPCBA插件：https:&#x2F;&#x2F;">
+<meta property="og:locale">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101519468.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101523549.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101529165.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101532265.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101536031.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101545749.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101629213.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101634364.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101622000.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101639911.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101643336.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101645512.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101649124.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101652163.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101709027.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101709711.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101710359.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101711259.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101713426.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101713050.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101726825.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102107371.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102110079.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102112552.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102116901.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102119304.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102127595.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102142200.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102152036.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102158087.png">
+<meta property="article:published_time" content="2022-10-06T13:00:15.688Z">
+<meta property="article:modified_time" content="2022-04-11T08:52:22.900Z">
+<meta property="article:author" content="Joy_Obama">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101519468.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Time is Gone" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Time is Gone</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Joy_Obama</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://joyobama.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-AD简易教程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2022-10-06T13:00:15.688Z" itemprop="datePublished">2022-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      AD简易教程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="AD-简易教程"><a href="#AD-简易教程" class="headerlink" title="AD 简易教程"></a>AD 简易教程</h1><h2 id="安装AD21-6-1和DigiPCBA封装库插件"><a href="#安装AD21-6-1和DigiPCBA封装库插件" class="headerlink" title="安装AD21.6.1和DigiPCBA封装库插件"></a>安装AD21.6.1和DigiPCBA封装库插件</h2><ul>
+<li><strong>AD21.6.1安装包：</strong>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1t47GxXYDtGJwAkHclOfbrg?pwd=w0fv">https://pan.baidu.com/s/1t47GxXYDtGJwAkHclOfbrg?pwd=w0fv</a>      提取码：w0fv</li>
+<li><strong>安装教程</strong>：<a target="_blank" rel="noopener" href="https://www.mr-wu.cn/altium-designer-ad-21-free-download/">https://www.mr-wu.cn/altium-designer-ad-21-free-download/</a></li>
+<li><strong>DigiPCBA插件</strong>：<a target="_blank" rel="noopener" href="https://www.mr-wu.cn/altium-designer-software-extensions/%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89">https://www.mr-wu.cn/altium-designer-software-extensions/（可选）</a></li>
+</ul>
+<h2 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h2><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101519468.png" alt="image-20220410151957435"></p>
+<p>新建工程时，选<strong>本地工程 Local Project</strong>，确定<strong>工程名Project Name和路径Folder</strong>，一些输出文件需要在这些路径里面找，包括生成的PCB，发给厂家的文件等等。然后Create。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101523549.png" alt="image-20220410152311507"></p>
+<p>创建工程后在Projects中可以看到刚刚创建的工程，里面是空的，会提示No Document Added。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101529165.png" alt="image-20220410152923120"></p>
+<p>如果没有看到Projects这个栏，这个栏有可能在右边，左边，上边，下边或者悬浮；如果都没有的话那就找到右下角有一个<strong>Panels</strong>按钮可以打开这个工具栏，其他的工具栏也可以在这里找到，因为屏幕空间有限，大多数时候也习惯关掉这些工具栏。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101532265.png" alt="image-20220410153232232"></p>
+<p>然后就是添加新的原理图Schematic文档和PCB文档，当然后面你们可以根据需要添加已有的文档，这里需要按照这个步骤快速的上手这个软件，并能够将工作进行起来。</p>
+<p>跟许多软件一样，有改动未保存的会有*****的标记，而这个软件需要注意，做完更改后，进行下一步的时候，需要保存。软件工具链在不同文件之间链接的时候是基于已保存的文件，许多错误的原因就是在于未保存文档。然后新的文档保存时，最好起个名字，便于自己识别。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101536031.png" alt="image-20220410153623982"></p>
+<p>还有一点，同一项目的文档，最好放置在与工程文件相同的路径下，否则容易出错。如下图所示，注意这三个文件的后缀名，PcbDoc是PCB文档，SchDoc是原理图文档，PrjPcb是工程文件或者说工程入口。他们三个最好在一起。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101545749.png" alt="image-20220410154503707"></p>
+<p>新建好工程和文档之后，在上方工具栏<strong>工具Tools</strong>-<strong>偏好Preferences</strong>，打开软件偏好设置。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101629213.png" alt="image-20220410162947175"></p>
+<p>找到原理图schematic中的可选项中的graphical editing，取消选中reset part designators on paste，然后应用。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101634364.png" alt="image-20220410163445312"></p>
+<p>打开发的那个工程文件，双击收到的文件夹中PrjPcb后缀的文件即可打开，或者在软件File-Open也可以。框选相应的电路，复制到刚刚创建好的空原理图文档中。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101622000.png" alt="image-20220410162202913"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101639911.png" alt="image-20220410163949843"></p>
+<p>直接复制过来的元件标号是被重置了的就是<strong>U？</strong>，有小波浪线是因为网络标号没有成对，待会需要添加接口给它，让其配对。在此之前，需要把PCB中的相关部件也拷过来。在Tools中开启交叉选择模式，保证刚刚在原理图中选中元器件及连线保持选中状态，打开V1.PcbDoc，会同样选中对应的在器件。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101643336.png" alt="image-20220410164355305"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101645512.png" alt="image-20220410164517426"></p>
+<p>把这些复制到新建工程中的新建PCB文件中。注意，PCB的复制操作，在复制时会出现绿色的十字选择状态，这是要选一个参考点，这里点左上角的那个元器件就行，然后在新建的空PCB文档中，粘贴，如下图。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101649124.png" alt="image-20220410164932077"></p>
+<p>因为选中了连线，所以所有相关的物理连线也被选中了，就是上图中的小红线，不需要这些线，要把他们删干净，你们操作的时候需要分别一下那些是有用的，哪些是没有用的，然后删掉不需要的线或者器件。这里删掉之后，保存，如下图</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101652163.png" alt="image-20220410165246124"></p>
+<p>然后在打开PCB文档的状态下，在Design中导入工程变更。然后会提示要匹配元器件，因为是复制过来的，两个文档中的器件没关联起来。这里选择自动创建器件连接。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101709027.png" alt="image-20220410170900986"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101709711.png" alt="image-20220410170924674"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101710359.png" alt="image-20220410171041326"></p>
+<p>然后会出现变更详细表，先验证变更，看看有没有问题，有问题看看是不是致命的问题，然后执行变更。创建连接后，会出现白色的飞线，表示这些元器件已经建立好了电气网表连接。保存！删掉左下角红色的框框，保存。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101711259.png" alt="image-20220410171149216"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101713426.png" alt="image-20220410171303374"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101713050.png" alt="image-20220410171334010"></p>
+<p>新建工程，以及复制工作完成！</p>
+<h2 id="添加接口以及元件库的使用"><a href="#添加接口以及元件库的使用" class="headerlink" title="添加接口以及元件库的使用"></a>添加接口以及元件库的使用</h2><p>回到新建的原理图，原有的发给你们的工程可以关了，开着会占内存。在右下角的panels中打开Manufacturer Part Search，这个就是在线的元件库，但这个需要安装第一步的那个DigiPCBA插件，并按照他的教程进行注册和登陆。这个在找一些芯片的时候非常有用，而在找接口的时候，因为接口的名字太多，太复杂了，光找到名字就已经很麻烦了，所以还是另外找了淘宝的库，这里先不说明了。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204101726825.png" alt="image-20220410172604790"></p>
+<p>一般情况下，一个板子会有三大类端口，电源端口，输入端口，输出端口，在情况允许的情况下应该分开放置，便于辨识、测试、连接。另外，用于实验测试用板子，还需要留有相应的测试点，方便连接测试探头，测试以电压测试为主，电压测试必须有接触点，分别是参考地与信号点。电流测试一般采用的都是检测磁场，是<strong>套</strong>在电流流通上，这里先不用考虑。实际测量时，会讲解。</p>
+<p>电源接口一般采用5.08mm间距端子，信号一般采用2.54mm间距排针。</p>
+<h3 id="安装元件库"><a href="#安装元件库" class="headerlink" title="安装元件库"></a>安装元件库</h3><p>安装元件库，首先要把相关的库文件放在合适的位置，一般放置到文档中AD的那个libraries里面，但我这里因为是在用工作站，所直接放在我的局域网共享文件夹里面，你们也可以直接在局域网里面复制过去，复制文件还是比较方便的。</p>
+<p>工作站的共享文件夹路劲为\DESKTOP-H4410LS\Joy_Obama，需要连上018局域网，然后在资源管理器的地址栏上输入这个地址，如果未打开局域网共享会有提示，按照提示打开即可。直接把里面的<strong>AD封装</strong>这个文件夹拷到你们自己电脑放置库的位置。</p>
+<p>回到AD软件，在原理图打开的状态下，在中间上方的浮动工具栏中，那个元件符号的，左数第五个，即是打开元件库。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102107371.png" alt="image-20220410210732332"></p>
+<p>打开元件库后，在component栏中的右上方有一个类似于菜单的三横标志，点击它，然后选择file-based libraries preferences，会弹出元件库安装界面。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102110079.png" alt="image-20220410211001045"></p>
+<p>选择installed，点击下方安装按钮，会弹出文件选择窗口，浏览到放置刚刚复制安装库位置，将所有的PCB封装库，与原理图库逐个安装好，3D封装库不用手动安装。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102112552.png" alt="image-20220410211220501"></p>
+<p>若在安装时打开文件夹显示空白则，在资源管理窗口下方选择所有文件，则会显示所有文件，原理图库后缀为schlib，PCB库为Pcblib，还有一类集成库后缀为intlib，集成库是把前两个集成在一起的库。打开文件夹后，全选安装，因为库比较大，所以会有点卡，<strong>不要慌</strong>。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102116901.png" alt="image-20220410211622843"></p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102119304.png" alt="image-20220410211953257"></p>
+<p>安装完后，在components栏的下拉栏中可以看到所安装的库。然后根据需要去选择。这里选5.08连接器放置电源端口，信号接口同理选择2.54连接器。电源接口一般选2P或3P，2P适用于单电源，3P则适用于大功率单电源（中间引脚不连接用于隔断）和双电源。信号连接根据信号数量选择，但需要注意的是，必须要要有地线连接，数量一般是信号数量于一定地线数量之和。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102127595.png" alt="image-20220410212727557">s</p>
+<h3 id="一些基本操作"><a href="#一些基本操作" class="headerlink" title="一些基本操作"></a>一些基本操作</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102142200.png" alt="image-20220410210732332"></p>
+<p>基本操作基本上都集中在浮动条上了，<strong>右击可展开</strong>，从左往右依次现简要说明如下：</p>
+<ol>
+<li>过滤器，操作较为复杂，现不讲解，有兴趣可以自己查一下。</li>
+<li>移动选项，如非特殊，一般用鼠标就可以完成基本的移动操作，一般是拖拽与旋转，拖拽为左击按住即为拿起该元素（除了器件还有连线和符号），拖拽状态下所选择元素会虚化，在拖拽状态下按空格键可九十度旋转，可调整到所需状态。</li>
+<li>框选，如非特殊，一般用鼠标点击空白处拖拽即可拉框，框选有两种模式，一种是左上角往右下角拉，是选择完全被包含的元素，另一种是从右下角往左上角拉，是选择所有触碰到选择框的元素。</li>
+<li>对齐操作，该操作与office操作类似，不过多讲述。</li>
+<li>元件库</li>
+<li>电气连接线<img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102152036.png" alt="image-20220410215221000">有四种连线方式，基本的则是wire（线)和net label（网络标签)，线比较直观，网络标签是较为灵活便捷的方式，也是更接近软件工作原理的方式，同一个网络标签则是连在一起的地方，在复杂情况下，采用连线原理图会变得混乱。</li>
+<li>电源网络标号，是一类特殊的网络标号。</li>
+<li>这个我也没有用过，高阶操作。</li>
+<li>子图操作，原工程采用了子图和多通道的设计方法，但先不讲解。</li>
+<li>文档端口，与子图联合使用，先不讲解。</li>
+<li>特殊信号标记，<img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204102158087.png" alt="image-20220410215840050">一般常用的是第二与第三个，第二标记引脚不需要电气检查，一般标记该引脚不需要电气连接，第三个是差分信号标记，高速信号需要采用差分布线，我们这里没有用到。</li>
+<li>文字操作，用来进行一些原理图的文字说明，可以自己尝试一下，不会影响原理图的逻辑。</li>
+<li>画图操作，与文字操作类似，进行一些图画说明，可以自己尝试，不会影响原理图逻辑。</li>
+<li>最后点击某个命令后则会进入该命令状态，可按esc退出，与大多数软件类似。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://joyobama.github.io/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" data-id="cl8x3ovru0001bgoc4bot08g0" data-title="AD简易教程" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/10/06/2022%E5%B9%B44%E6%9C%88FPGA%E5%BC%80%E5%8F%91%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E8%A6%81%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">要点总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">AD简易教程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2022%E5%B9%B44%E6%9C%88FPGA%E5%BC%80%E5%8F%91%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E8%A6%81%E7%82%B9/">要点总结</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2021%E5%B9%B4%E8%AE%B0%E8%B4%A6/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/">信号处理板计划</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/">新能源汽车电池数据清洗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Joy_Obama<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

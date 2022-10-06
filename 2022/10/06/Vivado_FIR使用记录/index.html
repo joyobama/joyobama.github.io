@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Vivado FIR Compiler 7.2使用记录 | Time is Gone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Vivado FIR Compiler 7.2使用记录参考连接  matlab与FPGA数字滤波器设计（1）——通过matlab的fdatool工具箱设计FIR数字滤波器 - 云+社区 - 腾讯云 (tencent.com) matlab与FPGA数字滤波器设计（2）——Vivado调用IP核设计FIR滤波器 - 云+社区 - 腾讯云 (tencent.com) matlab与FPGA数字滤波器设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vivado FIR Compiler 7.2使用记录">
+<meta property="og:url" content="https://joyobama.github.io/2022/10/06/Vivado_FIR%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Time is Gone">
+<meta property="og:description" content="Vivado FIR Compiler 7.2使用记录参考连接  matlab与FPGA数字滤波器设计（1）——通过matlab的fdatool工具箱设计FIR数字滤波器 - 云+社区 - 腾讯云 (tencent.com) matlab与FPGA数字滤波器设计（2）——Vivado调用IP核设计FIR滤波器 - 云+社区 - 腾讯云 (tencent.com) matlab与FPGA数字滤波器设">
+<meta property="og:locale">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204172214385.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204172245289.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181055603.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181102103.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181118768.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181605756.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181611174.png">
+<meta property="og:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181612401.png">
+<meta property="article:published_time" content="2022-10-06T13:00:15.667Z">
+<meta property="article:modified_time" content="2022-04-20T13:10:14.032Z">
+<meta property="article:author" content="Joy_Obama">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204172214385.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Time is Gone" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Time is Gone</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Joy_Obama</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://joyobama.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Vivado_FIR使用记录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/10/06/Vivado_FIR%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" class="article-date">
+  <time class="dt-published" datetime="2022-10-06T13:00:15.667Z" itemprop="datePublished">2022-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Vivado FIR Compiler 7.2使用记录
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Vivado-FIR-Compiler-7-2使用记录"><a href="#Vivado-FIR-Compiler-7-2使用记录" class="headerlink" title="Vivado FIR Compiler 7.2使用记录"></a>Vivado FIR Compiler 7.2使用记录</h1><p>参考连接</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1801170">matlab与FPGA数字滤波器设计（1）——通过matlab的fdatool工具箱设计FIR数字滤波器 - 云+社区 - 腾讯云 (tencent.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1801172">matlab与FPGA数字滤波器设计（2）——Vivado调用IP核设计FIR滤波器 - 云+社区 - 腾讯云 (tencent.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1801173">matlab与FPGA数字滤波器设计（3）—— Matlab 与 Vivado 联合仿真 FIR 滤波器 - 云+社区 - 腾讯云 (tencent.com)</a></li>
+</ul>
+<p>分为两步，生成滤波器系数和设置FIR Compiler 7.2例化IP。</p>
+<h2 id="MATLAB-FDAtool"><a href="#MATLAB-FDAtool" class="headerlink" title="MATLAB-FDAtool"></a>MATLAB-FDAtool</h2><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204172214385.png" alt="image-20220417221426263"></p>
+<p>这个工具是matlab常用的工具，不同版本名字不一样，Filter Designer或FDATOOL或者滤波器设计工具，一般可以在matlab的APP中可以找到。先左下角的几个图标，一般默认是最下面那个，滤波器设计，用的最多的也是这个。这里需要注意的几个点如下</p>
+<ul>
+<li><p>阶数其实就是点数，FIR阶数与点数相差1，阶数等于点数减1；一般来说阶数越高效果越好，但延时高，要与采样频率相匹配，采样速率高，多几个点也没有什么关系。</p>
+</li>
+<li><p>数字滤波器与模拟滤波器有非常大的区别，模拟滤波器非常灵活，但数字滤波器基本上都是根据采样频率归一化后的若干个，可以直接查表选择所需要的类型。根据数字信号处理教材里有非常多种设计方法，最简单的即为窗方法，最直观。因为这里不需要深究滤波器性能，重点在于使用。根据查找对比，Blackman窗是旁瓣抑制较好，经典，就是主瓣太宽，不过因为采样频率足够高，可以通过增加阶数的方式得到较好的效果。Blackman窗旁瓣抑制为-57dB，主瓣宽度为12pi&#x2F;N，在设置截止频率时不应超出这个宽度，只能通过调整采样率或者阶数实现，或者换一种窗结构。</p>
+</li>
+<li><p>IIR与FIR的区别在于，IIR的相位响应是非线性的，一般需要加带通滤波器进行相位矫正，两者加起来的资源消耗与FIR相当甚至更多。所以一般数字滤波器都采用FIR滤波器，其相位响应为线性。</p>
+</li>
+<li><p>数字滤波器与模拟滤波器不同在于，数字系统每个计算时刻，都认为系统是稳态的，这是数字信号处理的一个基础。</p>
+</li>
+<li><p>工具默认是采用双精度浮点系数，但浮点运算在任何平台都是非常麻烦的一件事情，资源消耗特别大，适合在通用PC保证计算精度，在底层逻辑计算平台上要尽量避免浮点运算，需要转换为定点型系数。学术版matlab没有定点运算权限，正版软件受害者实锤。设置定点型滤波器在左下角第三图标，如下图所示，参考别人的经验，一般采用采用16位量化会比较好，在VIVADO设置IP时也会提及量化，VIVADO对定点型支持较好。</p>
+<p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204172245289.png" alt="image-20220417224521232"></p>
+</li>
+<li><p>在没有权限，正版软件受害的情况下，可在matlab里面将里面的双精度系数乘以$2^{16}-1$再取整。另外，定点化会极大影响系数精度，从而影响滤波器性能，在设计过程中，可以看见对比情况，一般还是避免正版受害的情况，在工具箱中调整设计一个较好的系数。</p>
+</li>
+<li><p>最后导出是在<strong>目标</strong>，有Xilinx字样，coe是Xilinx专用系统格式。</p>
+</li>
+<li><p>这里最佳精度小数长度刚好是0，如果依然有小数，应该再这里设置将小数位数置零，小数很麻烦。一般定点化都会是整数。</p>
+</li>
+</ul>
+<h2 id="FIR-Compiler-7-2"><a href="#FIR-Compiler-7-2" class="headerlink" title="FIR Compiler 7.2"></a>FIR Compiler 7.2</h2><p>这个应该是非常常用的一个IP了，数字信号处理大部分时候都要滤波，还有另外一个非常重要的则是DDS，VIVADO提供的DDS还有FIR核都是采用AXI4-STEAM协议，搞得很麻烦。搞得还要去学习一下协议，但是这个是在构建复杂系统才用到，这里其实没有什么用，一般情况下<strong>s_axis_data_tvalid</strong>都是置1拉高，输入信号也就三个，一个数据输入，一个时钟，一个数据有效使能。三个输出，一个数据输出，一个数据有效使能输出，一个已准备输出。两个使能信号可不管。</p>
+<p>寻找IP在旁边的Flow Navigator里面的 IP Catalog里面。找到对应的FIR compiler。左边框为IP设置状态，右面为设置窗口，主要说明设置窗口。共六个标签页，逐个说明一下。</p>
+<h3 id="Filter-Option"><a href="#Filter-Option" class="headerlink" title="Filter Option"></a>Filter Option</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181055603.png" alt="image-20220418105537533"></p>
+<p>滤波器系数那里选择源为COE文件，就从matlab里面导出的文件，这个文件最好放在vivado的工程目录下，名字和路径都不应该有中文和空格，vivado作为一个专业软件，其兼容性较差，对中文基本没有支持，空格也很容易出错，一般用下划线或者骆驼峰命名法。选择完用哪个小文件夹按钮浏览找到放置的COE文件即可从，下面的几个基本上不用动，系数用一组，也不重载，资源大把，不够就再买一块。</p>
+<p>下面的Filter Specification 滤波器类型选最典型的单速率模式，即输出频率与输出的频率一致，剩下的也不用动，也动不了。</p>
+<h3 id="Channel-Specification"><a href="#Channel-Specification" class="headerlink" title="Channel Specification"></a>Channel Specification</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181102103.png" alt="image-20220418110245037"></p>
+<p>通道选一个，通道顺序选基本顺序，因为就一个，所以没有什么需要调整的，并行路径选一个，资源大把，不要考虑这些问题，下面的过采样设置，因为主体时钟是50MHz，数据采样率为2.5MHz，也可以都选2.5MHz，但这里选用了主时钟，进行了过采样，会多消耗一些资源，响应稍微快一点。</p>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181118768.png" alt="image-20220418111817693"></p>
+<p>系数选项要与matlab里面的设置一致，有符号系数，这里也提到了量化，并且是整数量化，并且不能更改，可能是因为已经导入了系数，但整数量化对FPGA要友好很多，所以一般量化还是需要整数量化，另外量化的位宽是可以调整的，但为了保证精度还是与matlab里面一致，16位位宽。系数选项最后一栏为系数结构，这里选择inferred，让软件自己推断。</p>
+<p>最后数据路径选项比较重要，这里我们输入数据为为有符号的12位数据，但是为了与AXI4-stream协议统一，扩展到16位，后面四位补零，将信号扩大16倍，没有小数位。在输出的位宽是36位，全精度位宽太大，考虑到后续的模组开销，并不需要这么高的精度，统一为16位精度输出，取整方式为直接在最底位截断，不输出小数位。</p>
+<h3 id="Detailed-Implementation"><a href="#Detailed-Implementation" class="headerlink" title="Detailed Implementation"></a>Detailed Implementation</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181605756.png" alt="image-20220418160547679"></p>
+<p>主要是优化目标，我们这里需要的是速度，最后的DSP切片栏，可以适当选多一点。</p>
+<h3 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181611174.png" alt="image-20220418161138112"></p>
+<p>这里主要要启用复位信号。</p>
+<h3 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h3><p><img src="https://joyobama.oss-cn-guangzhou.aliyuncs.com/img/202204181612401.png" alt="image-20220418161224335"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://joyobama.github.io/2022/10/06/Vivado_FIR%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" data-id="cl8x3ovrw0004bgoc8z6m2h7t" data-title="Vivado FIR Compiler 7.2使用记录" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/10/06/%E9%92%B4%E5%9F%BA%E9%9D%9E%E6%99%B6%E7%A3%81%E9%80%9A%E9%97%A8%E4%BB%BF%E7%9C%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/06/Verilog%E6%9C%89%E7%AC%A6%E5%8F%B7%E6%95%B0%E4%B8%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%A6%81%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Verilog 有符号数与无符号数的一些注意点</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/06/AD%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">AD简易教程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2022%E5%B9%B44%E6%9C%88FPGA%E5%BC%80%E5%8F%91%E7%9A%84%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%E8%A6%81%E7%82%B9/">要点总结</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/2021%E5%B9%B4%E8%AE%B0%E8%B4%A6/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E6%9D%BF%E8%A7%84%E5%88%92/">信号处理板计划</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/06/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E7%94%B5%E6%B1%A0%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/">新能源汽车电池数据清洗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 Joy_Obama<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
